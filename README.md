@@ -1,2 +1,2 @@
 # arch-dialogbox-installer
-installer archlinux with dialog box
+Script untuk install archlinux (dialog box)
