@@ -19,6 +19,7 @@ input_data_intaller() {
 	input_create_user
 	input_pkg_tools
 	input_desktop
+        input_grub
 }
 
 #SETUP ARCH BASE
@@ -59,7 +60,7 @@ configure() {
     set_timezone
 
     #Setting console keymap
-	set_keymap
+    set_keymap
 
     #Setting root password
     set_root_password 
@@ -146,7 +147,7 @@ select_disk_drive() {
 				((++next))
 			done)
 	msg="Pilih Disk:\nDimana system akan di install?\n\n"
-	drive=$(whiptail --title "DISKS" --menu "$msg" --ok-button "Select" 15 78 0  ${choice[@]} 3>&1 1>&2 2>&3) yt=$?
+	drive=$(whiptail --title "DISKS" --menu "$msg" --ok-button "Select" 15 78 0  ${choice[@]} 3>&1 1>&2 2>&3); yt=$?
 	if [[ $yt -eq 1 ]]; then exit; fi
 }
 
@@ -558,6 +559,8 @@ set_chroot() {
 	sed -i "9idrive='$drive'" $isetup
 	sed -i "10idesktopyt='$desktopyt'" $isetup
 	sed -i "11ipkg='$(echo -e $pkgtools)'" $isetup
+        sed -i "12ipathgrub='$pathgrub'" $isetup
+        sed -i "13grubyt='$grubyt'" $isetup
 	arch-chroot /mnt ./setup.sh chroot
 }
 error_message() {
@@ -738,11 +741,26 @@ set_sudoers() {
 }
 
 #-----------------------------------------------------------------[grub]
-set_grub() {
-select_disk_drive
+input_grub() {
+pdisk=($pathdisk)
+	ndisk=($namedisk)
+	sdisk=($sizedisk)
+	choice=$(
+			for i in ${pdisk[@]}; do
+				echo -e "$i" "${ndisk[next]}_${sdisk[next]}GB"
+				((++next))
+			done)
+	msg="Pilih Disk:\nDimana bootloader akan di install?\n\n"
+	pathgrub=$(whiptail --title "INSTALL GRUB" --menu "$msg" --ok-button "Select" 15 78 0  ${choice[@]} 3>&1 1>&2 2>&3); grubyt=$?
+}
 
-grub-install --target=i386-pc $drive
-grub-mkconfig -o /boot/grub/grub.cfg
+set_grub() {
+if [[ $grubyt -eq 0 ]]; then
+     grub-install --target=i386-pc $pathgrub
+else
+     grub-install --target=i386-pc $drive
+fi
+     grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 #--------------------------------------------------[clean chace package]
