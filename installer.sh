@@ -812,8 +812,8 @@ chmod +x $pathsddm
 }
 
 set_kde_menu_edit() {
-pathmenus="/home/{$username}/.config/menus/applications-kmenuedit.menu"
-dirmenus="/home/{$username}/.config/menus"
+pathmenus="/home/${username}/.config/menus/applications-kmenuedit.menu"
+dirmenus="/home/${username}/.config/menus"
 kmenu_edit() {
 cat <<'EOF' >$pathmenus
 <!DOCTYPE Menu PUBLIC '-//freedesktop//DTD Menu 1.0//EN' 'http://www.freedesktop.org/standards/menu-spec/1.0/menu.dtd'>
@@ -930,62 +930,6 @@ kmenu_edit
 chown -R ${username}:${username} $dirmenus
 fi
 }
-
-set_dolphin() {
-dolphinrc='/home/.config/dolphin.rc'
-	dolphin_rc() {
-cat <<'EOF' >$dolphinrc
-MenuBar=Disabled
-
-[$Version]
-update_info=dolphin_detailsmodesettings.upd:rename-leading-padding
-
-[DetailsMode]
-IconSize=32
-
-[General]
-RememberOpenedTabs=false
-Version=202
-ViewPropsTimestamp=2022,10,25,22,58,26.936
-
-[IconsMode]
-IconSize=80
-
-[KFileDialog Settings]
-Places Icons Auto-resize=false
-Places Icons Static Size=22
-
-[KPropertiesDialog]
-LVDS-1 Height 1366x768 LVDS-1=616
-LVDS-1 Height 1520x855 LVDS-1=444
-LVDS-1 Width 1366x768 LVDS-1=419
-LVDS-1 Width 1520x855 LVDS-1=386
-LVDS1 Height 1366x768 LVDS1=458
-LVDS1 Width 1366x768 LVDS1=387
-
-[MainWindow]
-MenuBar=Disabled
-ToolBarsMovable=Disabled
-
-[Notification Messages]
-ConfirmDelete=true
-
-[Open-with settings]
-CompletionMode=1
-History=gea,eli
-
-[PreviewSettings]
-Plugins=appimagethumbnail,audiothumbnail,blenderthumbnail,comicbookthumbnail,cursorthumbnail,djvuthumbnail,ebookthumbnail,exrthumbnail,directorythumbnail,fontthumbnail,imagethumbnail,jpegthumbnail,kraorathumbnail,windowsexethumbnail,windowsimagethumbnail,mobithumbnail,opendocumentthumbnail,gsthumbnail,rawthumbnail,svgthumbnail,textthumbnail,ffmpegthumbs
-EOF
-	}
-if [[ -f $dolphinrc ]]; then
-	dolphin_rc
-else
-	dolphin_rc
-	chown ${username}:${username} $dolphinrc
-fi
-}
-
 
 #-----------------------------------------------------------------[exec]
 	if [[ "$1" == "chroot" ]]
