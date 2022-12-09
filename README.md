@@ -1,5 +1,5 @@
 # Installer archlinux
-Script untuk install archlinux (dialog box)
+Script untuk install archlinux dengan dialog box
 
 ```bash
 git clone https://github.com/matobodol/arch-dialogbox-installer
