@@ -603,7 +603,7 @@ input_timezone() {
 		for i in $tz; do
 		echo -e "$i \r"
 		done))
-	timezone=$(whiptail --title "TIME ZONES" --menu "$msg" --nocancel 25 100 15 ${commands[@]} 3>&1 1>&2 2>&3)
+	timezone=$(whiptail --title "TIME ZONES" --menu "$msg" --nocancel --default-item "Asia/Jakarta" 25 100 15 ${commands[@]} 3>&1 1>&2 2>&3)
 }
 set_timezone() {
     ln -sf "/usr/share/zoneinfo/$timezone" /etc/localtime
@@ -726,7 +726,7 @@ input_keymap() {
 		for i in $tz; do
 		echo -e "$i \r"
 		done))
-	keymap=$(whiptail --title "$KEYMAP" --menu "$msg" --nocancel 25 100 15 ${pilihan[@]} 3>&1 1>&2 2>&3)
+	keymap=$(whiptail --title "$KEYMAP" --menu "$msg" --nocancel --default-item "us" 25 100 15 ${pilihan[@]} 3>&1 1>&2 2>&3)
 }
 set_keymap() {
     echo "KEYMAP=$keymap" > /etc/vconsole.conf
@@ -762,7 +762,7 @@ unmount_filesystems() {
 
 #-------------------------------------------------------------[kde lite]
 input_desktop() {
-desktop=$(whiptail --title 'DESKTOP' --yesno 'Install desktop kde plasma lite?' --yes-button 'Install' --no-button 'Tidak' 7 85) ; desktopyt=$?
+desktop=$(whiptail --title 'DESKTOP' --yesno 'Install desktop kde plasma lite?' --yes-button 'Install' --no-button 'Tidak' 7 85 3>&1 1>&2 2>&3) ; desktopyt=$?
 }
 
 set_kde_lite() {
