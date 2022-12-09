@@ -739,8 +739,10 @@ set_sudoers() {
 
 #-----------------------------------------------------------------[grub]
 set_grub() {
-	grub-install --target=i386-pc $drive
-	grub-mkconfig -o /boot/grub/grub.cfg
+select_disk_drive
+
+grub-install --target=i386-pc $drive
+grub-mkconfig -o /boot/grub/grub.cfg
 }
 
 #--------------------------------------------------[clean chace package]
