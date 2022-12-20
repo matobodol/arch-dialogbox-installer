@@ -2,7 +2,12 @@
 ### Script untuk install archlinux dengan dialog box.
 
 Saat ini hanya support untuk bios MBR. Untuk support gpt/efi nanti nyusul kalau sudah ada device untuk mencobanya.
-
+```bash
+pacman -Sy
+```
+```bash
+pacman -S git
+```
 ```bash
 git clone https://github.com/matobodol/arch-dialogbox-installer
 ```
