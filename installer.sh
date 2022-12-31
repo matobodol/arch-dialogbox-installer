@@ -801,7 +801,7 @@ systemctl enable thermald
 
 set_sddm_theme
 set_kde_menu_edit
-set_dolphin_rc
+
 fi
 }
 
