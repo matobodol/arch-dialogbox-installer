@@ -178,6 +178,8 @@ partisitable=$(whiptail --title "PARTISI TABLE" --menu "$msg" --ok-button "Selec
 selected_root() {
 while :
 do
+        sizedisk=$(fdisk -l $drive | grep 'GiB\|MiB' | awk '{print $3}' | awk -F. '{print $1}')	# daftar size semua hdd (tanpa G,M)
+
         namedisk=$(fdisk -l $drive | grep model | awk '{print $3}')
 	partdisk=$(ls -1 $drive[0-9])														# daftar semua partisi di dalam $pathdisk
 	partsize=$(lsblk $drive | tail -n +3 | awk '{print $4}')							# daftar semua size partisi di dalam $pathdisk (G,M)
