@@ -38,6 +38,7 @@ setup() {
 	format_partisi &>/dev/null
 
     #Installing base system
+    pacman -Sy archlinux-keyring
     install_base
     
     #Setting fstab
