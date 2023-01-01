@@ -38,7 +38,7 @@ setup() {
 	format_partisi &>/dev/null
 
     #Installing base system
-    pacman -Sy archlinux-keyring
+
     install_base
     
     #Setting fstab
@@ -535,6 +535,7 @@ confirm_to_format() {
 #STEP SETUP
 #---------------------------------------------------------[install base]
 install_base() {
+        pacman -S --noconfirm archlinux-keyring
 	pacstrap /mnt base linux linux-firmware nano libnewt
 	#fix gpg key if error
 	if ! [[ $? == 0 ]]; then 
