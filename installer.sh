@@ -746,8 +746,6 @@ set_keymap() {
 #--------------------------------------------------------------[sudoers]
 set_sudoers() {
     echo "%wheel ALL=(ALL) ALL" | tee -a /etc/sudoers &>/dev/null
-    echo "%rfkill ALL=(ALL) NOPASSWD: /usr/sbin/rfkill" | tee -a /etc/sudoers &>/dev/null
-    echo "%network ALL=(ALL) NOPASSWD: /usr/bin/netcfg, /usr/bin/wifi-menu" | tee -a /etc/sudoers &>/dev/null
 }
 
 #-----------------------------------------------------------------[grub]
