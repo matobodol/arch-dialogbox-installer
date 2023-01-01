@@ -133,11 +133,13 @@ done
 
 #=======================================================================[PARTITION MANAGER]
 #----------------------------------------------------------[select disk] 
+info_disk() {
 pathdisk=$(fdisk -l | grep GiB | awk '{print $2}' | awk -F: '{print $1}')				# daftar path semua hdd
 namedisk=$(fdisk -l $drive | grep model | awk '{print $3}')								# daftar nama semua hdd
 sizedisk=$(fdisk -l $drive | grep 'GiB\|MiB' | awk '{print $3}' | awk -F. '{print $1}')	# daftar size semua hdd (tanpa G,M)
-
+}
 select_disk_drive() {
+	info_disk
 	pdisk=($pathdisk)
 	ndisk=($namedisk)
 	sdisk=($sizedisk)
@@ -178,9 +180,7 @@ partisitable=$(whiptail --title "PARTISI TABLE" --menu "$msg" --ok-button "Selec
 selected_root() {
 while :
 do
-        sizedisk=$(fdisk -l $drive | grep 'GiB\|MiB' | awk '{print $3}' | awk -F. '{print $1}')	# daftar size semua hdd (tanpa G,M)
-
-        namedisk=$(fdisk -l $drive | grep model | awk '{print $3}')
+	info_disk
 	partdisk=$(ls -1 $drive[0-9])														# daftar semua partisi di dalam $pathdisk
 	partsize=$(lsblk $drive | tail -n +3 | grep part | awk '{print $4}')							# daftar semua size partisi di dalam $pathdisk (G,M)
 	partd=($partdisk)
@@ -426,6 +426,7 @@ format_partisi() {
 periksa_data() {
 case $partisitable in
 Tidak)
+	info_disk
 	targetinstall=$(echo "$partisiroot")
 	sdrive=$(echo "Target install          : $drive $namedisk ${sizedisk}GB")
 	ptable=$(echo "Partisi table           : ${partisitable}")
@@ -444,7 +445,7 @@ Tidak)
 	echo ""
 	echo ""
 	)
-	whiptail --title "PERIKSA DATA" --yesno "$msg" --yes-button "Ya" --no-button "Batalkan" 27 100
+	whiptail --title "PERIKSA DATA" --scrolltext --yesno "$msg" --yes-button "Ya" --no-button "Batalkan" 27 100
 	if [[ $? -eq 1 ]]; then exit; else confirm_to_format ; fi
 	;;
 msdos)
@@ -486,6 +487,7 @@ msdos)
 	fi
 	
 	#show data
+	info_disk
 	targetinstall=$(echo "$drive $namedisk ${disksize}GB")
 	sdrive=$(echo "Target install          : $drive $namedisk ${disksize}GB")
 	ptable=$(echo "Partisi table           : ${partisitable}")
@@ -506,13 +508,14 @@ msdos)
 	echo ""
 	echo ""
 	)
-	whiptail --title "PERIKSA DATA" --yesno "$msg" --yes-button "Ya" --no-button "Batalkan" 22 100
+	whiptail --title "PERIKSA DATA" --scrolltext --yesno "$msg" --yes-button "Ya" --no-button "Batalkan" 22 100
 	if [[ $? -eq 1 ]]; then exit; else confirm_to_format ; fi
 	;;
 esac
 }
 #WARNING
 confirm_to_format() {
+	info_disk
 	msg=$(
 		echo "!CATATAN: Setelah memilih <YA> proses install tidak dapat dibatalkan!"
 		echo ""
@@ -745,7 +748,12 @@ set_sudoers() {
 
 #-----------------------------------------------------------------[grub]
 input_grub() {
-pdisk=($pathdisk)
+	local
+pathdisk=$(fdisk -l | grep GiB | awk '{print $2}' | awk -F: '{print $1}')				# daftar path semua hdd
+namedisk=$(fdisk -l | grep model | awk '{print $3}')								# daftar nama semua hdd
+sizedisk=$(fdisk -l | grep 'GiB\|MiB' | awk '{print $3}' | awk -F. '{print $1}')	# daftar size semua hdd (tanpa G,M)
+
+	pdisk=($pathdisk)
 	ndisk=($namedisk)
 	sdisk=($sizedisk)
 	choice=$(
