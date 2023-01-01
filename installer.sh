@@ -699,6 +699,7 @@ list=(
 	dhcpcd 'client' off \
 	networkmanager "Penyedia jaringan" on \
 	linux-headers "building modules for kernel" on \
+        polkit "authorized tools" on \
 	)
 msg="\nTools/utilitas dasar, berfungsi untuk mendukung kinerja system.
 
