@@ -796,7 +796,7 @@ unmount_filesystems() {
 
 #-------------------------------------------------------------[kde lite]
 input_desktop() {
-desktop=$(whiptail --title 'DESKTOP' --yesno 'Install desktop kde plasma lite?' --yes-button 'Install' --no-button 'Tidak' 7 85 3>&1 1>&2 2>&3) ; desktopyt=$?
+desktop=$(whiptail --title 'DESKTOP' --yesno 'Install desktop kde plasma lite?' --yes-button 'Install' --no-button 'Lewati' 7 85 3>&1 1>&2 2>&3) ; desktopyt=$?
 }
 
 set_kde_lite() {
@@ -805,13 +805,12 @@ packages+=' plasma-desktop plasma-wayland-session plasma-disks plasma-nm plasma-
 packages+=' kdeplasma-addons kdegraphics-thumbnailers ffmpegthumbs kde-gtk-config'
 packages+=' kwayland-integration kscreen kinfocenter konsole krunner'
 packages+=' dolphin-plugins breeze-gtk powerdevil power-profiles-daemon phonon-qt5-vlc sddm-kcm'
-packages+=' spectacle ark thermald gwenview okular vlc'
+packages+=' spectacle ark gwenview okular'
 		
 
 if [[ $desktopyt == 0 ]]; then
 pacman -S --noconfirm $packages
 systemctl enable sddm
-systemctl enable thermald
 
 set_sddm_theme
 set_kde_menu_edit
