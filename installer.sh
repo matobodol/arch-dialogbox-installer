@@ -4,7 +4,7 @@ clear
 #INPUT DISK MANAGER
 input_disk_manager() {
 
-	connect_wifi
+	#connect_wifi
 	select_disk_drive
 	partisi_table
 }
