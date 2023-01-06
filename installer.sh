@@ -365,7 +365,7 @@ buat_partisi_home() {
 		parted -s $drive mkpart primary ext4 $sizeroot $sizehome$s
 		yes | mkfs.ext4 ${drive}$nourut
 		mkdir -p /mnt/home
-		mount ${drive}$nourut /home
+		mount ${drive}$nourut /mnt/home
 		}
 	
 	if [[ -n $sizehome ]] && [[ $nourut -eq 1 ]]; then
